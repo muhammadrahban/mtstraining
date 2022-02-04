@@ -143,60 +143,19 @@
                             </a>
                             <div class="dropdown-menu p-4 dropdown-menu-right">
                                 <div class="row box justify-content-between my-4">
-                                    <div class="col">
-                                        <a href="#">
-                                            <i class="icon-apps purple lighten-2 avatar  r-5"></i>
-                                            <div class="pt-1">Apps</div>
-                                        </a>
-                                    </div>
                                     <div class="col"><a href="#">
                                         <i class="icon-beach_access pink lighten-1 avatar  r-5"></i>
                                         <div class="pt-1">Profile</div>
                                     </a></div>
                                     <div class="col">
-                                        <a href="#">
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
                                             <i class="icon-perm_data_setting indigo lighten-2 avatar  r-5"></i>
-                                            <div class="pt-1">Settings</div>
+                                            <div class="pt-1">logout</div>
                                         </a>
-                                    </div>
-                                </div>
-                                <div class="row box justify-content-between my-4">
-                                    <div class="col">
-                                        <a href="#">
-                                            <i class="icon-star light-green lighten-1 avatar  r-5"></i>
-                                            <div class="pt-1">Favourites</div>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <a href="#">
-                                            <i class="icon-save2 orange accent-1 avatar  r-5"></i>
-                                            <div class="pt-1">Saved</div>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <a href="#">
-                                            <i class="icon-perm_data_setting grey darken-3 avatar  r-5"></i>
-                                            <div class="pt-1">Settings</div>
-                                        </a>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row box justify-content-between my-4">
-                                    <div class="col">
-                                        <a href="#">
-                                            <i class="icon-apps purple lighten-2 avatar  r-5"></i>
-                                            <div class="pt-1">Apps</div>
-                                        </a>
-                                    </div>
-                                    <div class="col"><a href="#">
-                                        <i class="icon-beach_access pink lighten-1 avatar  r-5"></i>
-                                        <div class="pt-1">Profile</div>
-                                    </a></div>
-                                    <div class="col">
-                                        <a href="#">
-                                            <i class="icon-perm_data_setting indigo lighten-2 avatar  r-5"></i>
-                                            <div class="pt-1">Settings</div>
-                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
                                     </div>
                                 </div>
                             </div>

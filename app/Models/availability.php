@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class availability extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'course_id',
+        'price',
+        'location',
+        'starting',
+        'ending',
+        'seats',
+    ];
+
 }
