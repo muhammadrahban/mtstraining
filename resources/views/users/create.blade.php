@@ -72,11 +72,12 @@
                                 <div class="form-row">
                                     <div class="col-md-4">
                                         <div class="form-group m-0">
+
                                             <label class="my-1 mr-2" for="inlineFormCustom" >Select A parent</label>
-                                            <select class="custom-select my-1 mr-sm-2 form-control r-0 light s-12 @error('roles') is-invalid @enderror" id="inlineFormCustom" name="roles[]" multiple>
+                                            <select class="custom-select my-1 mr-sm-2 form-control r-0 light s-12 @error('roles') is-invalid @enderror" id="inlineFormCustom" name="roles">
                                                 <option selected="">Choose...</option>
                                                 @foreach ($roles as $role)
-                                                    <option value="{{$role->id}}" {{ auth()->user()->roles->pluck('name')[0] ?? '' === $role->name ? 'selected' : ''}}>{{$role->name}}</option>
+                                                    <option value="{{$role->id}}" {{ (auth()->user()->roles->pluck('name')[0] === $role->name) ? 'selected' : ''}}>{{$role->name}}</option>
                                                 @endforeach
                                             </select>
                                             @error('roles')

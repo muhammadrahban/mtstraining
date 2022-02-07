@@ -89,17 +89,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
         $request->validate([
             'name'      => 'required',
-            'email'     => 'required|unique:users,email|email',
-            'password'  => 'required|min:9|confirmed',
+            'email'     => 'required|email',
             'roles'     => 'required',
         ]);
         $input              = $request->only('name','email');
-        $input['password']  = Hash::make($request->password);
-        $user = User::create($input);
+        $user->update($input);
         $user->syncRoles($request->input('roles'));
         return redirect( route('user.index'))->with('status', "Successfully Inserted");
     }

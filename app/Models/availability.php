@@ -11,6 +11,7 @@ class availability extends Model
 
     protected $fillable = [
         'course_id',
+        'user_id',
         'price',
         'location',
         'starting',
@@ -18,4 +19,13 @@ class availability extends Model
         'seats',
     ];
 
+    /**
+     * Get the course associated with the availability
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function course()
+    {
+        return $this->belongsTo(course::class, 'course_id', 'id');
+    }
 }

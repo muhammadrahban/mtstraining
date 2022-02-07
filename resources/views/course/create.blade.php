@@ -23,7 +23,7 @@
                     </li>
                     @if ($idEdit)
                         <li class="float-right">
-                            <a class="nav-link active"  href="{{route('course.edit', $user[0]->id)}}" ><i class="icon icon-pencil"></i> Edit Course</a>
+                            <a class="nav-link active"  href="{{route('course.edit', $course[0]->id)}}" ><i class="icon icon-pencil"></i> Edit Course</a>
                         </li>
                     @endif
                 </ul>
@@ -35,109 +35,120 @@
             <div class="row my-3">
                 <div class="col-md-12">
                     @if ($idEdit)
-                        <form action="{{route('course.update', $user[0]->id)}}" method="POST">
+                        <form action="{{route('course.update', $course[0]->id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method("PUT")
                     @else
-                        <form action="{{route('course.store')}}" method="POST">
+                        <form action="{{route('course.store')}}" method="POST" enctype="multipart/form-data">
                     @endif
                         @csrf
                         <div class="card no-b no-r">
                             <div class="card-body">
                                 <h5 class="card-title">Course</h5>
                                 <div class="form-row">
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label for="name" class="col-form-label s-12">Course Name</label>
-                                            <input id="name" placeholder="Enter Course Name" class="form-control r-0 light s-12 @error('name') is-invalid @enderror" name="name" type="text" @if ($idEdit) value="{{ $user[0]->name }}" @endif>
-                                            @error('name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                    <div class="col-md-4">
+                                        <div class="avatar-upload" style="height: 270px">
+                                            <div class="avatar-edit">
+                                                <input type='file' name="featured" id="imageUpload1"
+                                                    accept=".png, .jpg, .jpeg"  />
+                                                <label for="imageUpload1"></label>
+                                            </div>
+                                            <div class="avatar-preview">
+                                                <div id="imagePreview1"
+                                                    style="background-image : url({{url('').'/uploads/'}}{{$course[0]->featured ?? 'placeholder.jpg'}}">
+                                                </div>
+                                            </div>
                                         </div>
+                                        @error('featured') 
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label class="my-1 mr-2" for="inlineFormCustom" >Course Type</label>
-                                            <select class="custom-select my-1 mr-sm-2 form-control r-0 light s-12 @error('Type') is-invalid @enderror" id="inlineFormCustom" name="Type">
-                                                <option value="">Choose...</option>
-                                                <option value="1">Physical</option>
-                                                <option value="2">Other</option>
-                                            </select>
-                                            @error('Type')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                    <div class="col-md-8">
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <div class="form-group m-0">
+                                                    <label for="name" class="col-form-label s-12">Course Name</label>
+                                                    <input id="name" placeholder="Enter Course Name" class="form-control r-0 light s-12 @error('name') is-invalid @enderror" name="name" type="text" @if ($idEdit) value="{{ $course[0]->name }}" @endif>
+                                                    @error('name')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group m-0">
+                                                    <label class="my-1 mr-2" for="inlineFormCustom" >Course Type</label>
+                                                    <select class="custom-select my-1 mr-sm-2 form-control r-0 light s-12 @error('type') is-invalid @enderror" id="inlineFormCustom" name="type">
+                                                        <option value="">Choose...</option>
+                                                        <option value="1" @if ($idEdit)  {{ ($course[0]->type == 1) ? 'selected' : '' }} @endif>Physical</option>
+                                                        <option value="2" @if ($idEdit)  {{ ($course[0]->type == 2) ? 'selected' : '' }} @endif >Other</option>
+                                                    </select>
+                                                    @error('type')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <div class="form-group m-0">
+                                                    <label for="assessment" class="col-form-label s-12">Assessment</label>
+                                                    <input id="assessment" placeholder="Enter assessment" class="form-control r-0 light s-12 @error('assessment') is-invalid @enderror" name="assessment" type="text" @if ($idEdit) value="{{ $course[0]->assessment }}" @endif />
+                                                    @error('assessment')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <div class="form-group m-0">
+                                                    <label for="short" class="col-form-label s-12">Short Description</label>
+                                                    <textarea id="short" placeholder="Enter Short Description" class="form-control r-0 light s-12 @error('short_desc') is-invalid @enderror" name="short_desc"> @if ($idEdit) {{ $course[0]->short_desc }} @endif </textarea>
+                                                    @error('short_desc')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="card-body after-add-more">
                                 <div class="form-row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="Location" class="col-form-label s-12">Location</label>
-                                            <input id="Location" name="location[]" placeholder="Enter Location" class="form-control r-0 light s-12 @error('location') is-invalid @enderror" type="text" @if ($idEdit) disabled @endif>
-                                            @error('location')
+                                            <label for="unit" class="col-form-label s-12">Units</label>
+                                            <textarea id="unit" name="units" placeholder="Enter units" class="form-control r-0 light s-12 @error('units') is-invalid @enderror" > @if ($idEdit) {{$course[0]->units}} @endif </textarea>
+                                            @error('units')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group m-0">
-                                            <label for="price" class="col-form-label s-12">Price</label>
-                                            <input id="price" name="price[]" placeholder="Enter Price" class="form-control r-0 light s-12 @error('price') is-invalid @enderror" type="number" @if ($idEdit) disabled @endif>
-                                            @error('price')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group m-0">
-                                            <label for="seat" class="col-form-label s-12">seats</label>
-                                            <input id="seat" name="seats[]" placeholder="Enter seats" class="form-control r-0 light s-12 @error('seat') is-invalid @enderror" type="number" @if ($idEdit) disabled @endif>
-                                            @error('seat')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1 mt-4 pl-4">
-                                        <input type="button" class="btn btn-primary add-more" value="+" />
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="starting" class="col-form-label s-12">Starting Date</label>
-                                            <input id="starting" name="starting[]" class="form-control r-0 light s-12 @error('starting') is-invalid @enderror" type="date" @if ($idEdit) disabled @endif>
-                                            @error('starting')
+                                            <label for="description" class="col-form-label s-12">Description</label>
+                                            <textarea id="description" name="desc" placeholder="Enter Description" class="form-control r-0 light s-12 @error('desc') is-invalid @enderror" > @if ($idEdit) {{$course[0]->desc}} @endif </textarea>
+                                            @error('desc')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group m-0">
-                                            <label for="ending" class="col-form-label s-12">Ending Date</label>
-                                            <input id="ending" name="ending[]" class="form-control r-0 light s-12 @error('ending') is-invalid @enderror" type="date" @if ($idEdit) disabled @endif>
-                                            @error('ending')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>    
                             </div>
                             <hr>
                             <div class="card-body">
@@ -151,83 +162,21 @@
     </div>
 </div>
 
-<div class="copy d-none">
-    <div class="card-body new_one">
-        <div class="form-row">
-            <div class="col-md-5">
-                <div class="form-group m-0">
-                    <label for="Location" class="col-form-label s-12">Location</label>
-                    <input id="Location" name="location[]" placeholder="Enter Location" class="form-control r-0 light s-12 @error('location') is-invalid @enderror" type="text" @if ($idEdit) disabled @endif>
-                    @error('location')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group m-0">
-                    <label for="price" class="col-form-label s-12">Price</label>
-                    <input id="price" name="price[]" placeholder="Enter Price" class="form-control r-0 light s-12 @error('price') is-invalid @enderror" type="number" @if ($idEdit) disabled @endif>
-                    @error('price')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group m-0">
-                    <label for="seat" class="col-form-label s-12">seats</label>
-                    <input id="seat" name="seats[]" placeholder="Enter seats" class="form-control r-0 light s-12 @error('seat') is-invalid @enderror" type="number" @if ($idEdit) disabled @endif>
-                    @error('seat')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-md-1 mt-4 pl-4">
-                <input type="button" class="btn btn-danger remove" value="X" />
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-5">
-                <div class="form-group m-0">
-                    <label for="starting" class="col-form-label s-12">Starting Date</label>
-                    <input id="starting" name="starting[]" class="form-control r-0 light s-12 @error('starting') is-invalid @enderror" type="date" @if ($idEdit) disabled @endif>
-                    @error('starting')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group m-0">
-                    <label for="ending" class="col-form-label s-12">Ending Date</label>
-                    <input id="ending" name="ending[]" class="form-control r-0 light s-12 @error('ending') is-invalid @enderror" type="date" @if ($idEdit) disabled @endif>
-                    @error('ending')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
-    jQuery(document).ready(function() {
-
-            $(".add-more").click(function(){
-                var html = $(".copy").html();
-                $(".after-add-more").after(html);
-            });
-
-        $("body").on("click",".remove",function(){
-            $(this).parents(".new_one").remove();
+    jQuery(document).ready(function(){
+        function readURL(input, number) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imagePreview' + number).css('background-image', 'url(' + e.target.result + ')');
+                    $('#imagePreview' + number).hide();
+                    $('#imagePreview' + number).fadeIn(650);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#imageUpload1").change(function () {
+            readURL(this, 1);
         });
     });
 </script>

@@ -4,7 +4,7 @@
             <div class="user-panel p-3 user-panel-bg light text-white mb-2">
                 <div class="mt-5
             ">
-                    <div class="float-left avatar avatar-md  mt-2 mr-3 image">
+                    <div class="float-left avatar avatar-md  mt-1 mr-2 image">
                         @if (Auth::user()->profile != Null)
                             <img src="{{ asset('image/'.Auth::user()->profile) }}" class="user-image" alt="User Image">
                         @else
@@ -12,8 +12,8 @@
                         @endif
                     </div>
                     <div class="float-left info">
-                        <h6 class="font-weight-light mt-3 mb-1">{{ strtoupper(Auth::user()->name)}}</h6>
-                        {{-- <a href="#"><i class="icon-circle text-primary blink"></i> Online</a> --}}
+                        <h6 class="font-weight-light mt-1">{{ strtoupper(Auth::user()->name)}}</h6>
+                        <p class="font-weight-light"><small>{{ strtoupper(Auth::user()->email)}}</small></p>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -40,21 +40,27 @@
                     </ul>
                 </li>
             @endrole
-            @canany(['show-course', 'delete-course', 'edit-course', 'add-course'])
+
+            @role('super-admin')
                 <li class="treeview"><a href="#"><i class="icon icon-desktop s-18"></i>Courses<i
                         class="icon icon-angle-left s-18 pull-right"></i></a>
                     <ul class="treeview-menu">
                         @can('show-course')
-                            <li><a href="{{route('user.index')}}"><i class="icon icon-desktop2"></i>All courses</a>
+                            <li><a href="{{route('course.index')}}"><i class="icon icon-desktop2"></i>All courses</a>
                             </li>
                         @endcan
                         @can('add-course')
-                            <li><a href="{{route('user.create')}}"><i class="icon icon-desk-chair"></i>Add cource</a>
+                            <li><a href="{{route('course.create')}}"><i class="icon icon-desk-chair"></i>Add cource</a>
                             </li>
                         @endcan
                     </ul>
                 </li>
-            @endcanany
+            @endrole
+
+            {{-- @role('branch-incharge') --}}
+                    <li><a href="{{route('location.index')}}"><i class="icon icon-desktop2"></i>Locations</a>
+                    </li>
+            {{-- @endrole --}}
         </ul>
     </section>
 </aside>

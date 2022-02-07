@@ -6,6 +6,7 @@ use App\Models\availability;
 use App\Models\course;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
+use Storage;
 
 class CourseController extends Controller
 {
@@ -16,8 +17,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $course = course::with('availability')->get();
-        return view('course.index');
+        $courses = course::all();
+        return view('course.index', compact('courses'));
     }
 
     /**
@@ -42,22 +43,21 @@ class CourseController extends Controller
         // return $request->all();
 
         $request->validate([
-            'name'  =>  'required',
-            'Type'  =>  'required',
+            'name'          =>  'required',
+            'type'          =>  'required',
+            'featured'      =>  'required',
+            'short_desc'    =>  'required',
+            'desc'          =>  'required',
+            'units'         =>  'required',
+            'assessment'    =>  'required',
         ]);
-        $input  = $request->only(['name', 'Type']);
-        $course = course::create($input);
-
-        foreach ($request->location as $key => $value) {
-            $avaliblility = new availability();
-            $avaliblility->course_id = $course->id;
-            $avaliblility->location  = $request->location[$key];
-            $avaliblility->price     = $request->price[$key];
-            $avaliblility->seats     = $request->seats[$key];
-            $avaliblility->starting  = $request->starting[$key];
-            $avaliblility->ending    = $request->ending[$key];
-            $avaliblility->save();
+        $input  = $request->all();
+        // dd($request->featured);
+        if($request->featured)
+        {
+            $input['featured'] = Storage::disk('uploads')->putFile('', $request->featured);
         }
+        $course = course::create($input);
         return redirect()->route('course.index');
     }
 
@@ -80,7 +80,9 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        //
+        $idEdit = true;
+        $course = course::where('id', $id)->get();
+        return view('course.create', compact('idEdit', 'course'));
     }
 
     /**
@@ -90,9 +92,26 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, course $course)
     {
-        //
+        $request->validate([
+            'name'          =>  'required',
+            'type'          =>  'required',
+            'featured'      =>  'required',
+            'short_desc'    =>  'required',
+            'desc'          =>  'required',
+            'units'         =>  'required',
+            'assessment'    =>  'required',
+        ]);
+        $input  = $request->all();
+        // dd($request->featured);
+        if($request->featured)
+        {
+            Storage::disk('uploads')->delete($request->featured);
+            $input['featured'] = Storage::disk('uploads')->putFile('', $request->featured);
+        }
+        $course->update($input);
+        return redirect()->route('course.index');
     }
 
     /**
@@ -101,8 +120,10 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(course $course)
     {
-        //
+        Storage::disk('uploads')->delete($request->featured);
+        $course->delete();
+        return redirect()->route('course.index');
     }
 }

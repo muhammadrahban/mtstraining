@@ -11,7 +11,12 @@ class course extends Model
 
     protected $fillable = [
         'name',
-        'Type'
+        'type',
+        'featured',
+        'assessment',
+        'short_desc',
+        'units',
+        'desc',
     ];
 
     /**
