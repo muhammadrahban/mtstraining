@@ -4,6 +4,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -19,9 +20,9 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/coursedetail/{id}', [HomeController::class, 'course_detail'])->name('coursedetail');
+Route::get('/search/{course?}/{location?}', [HomeController::class, 'course_search'])->name('search');
 
 Auth::routes();
 
@@ -33,4 +34,3 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('location', LocationController::class);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
-
