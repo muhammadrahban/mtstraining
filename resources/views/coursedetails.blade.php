@@ -27,7 +27,7 @@
                                 <img src="{{asset('front/')}}/images/placeholder.png" class="w-100 my-4">
                             @endif
                             <div class="mb-4">
-                                <a href="#" class="btn btn-lg btn-primary">Check Availabilities</a>
+                                <a href="{{route('search')}}" class="btn btn-lg btn-primary">Check Availabilities</a>
                                 <a href="#" class="btn btn-lg btn-secondary">Book Now</a>
                             </div>
 

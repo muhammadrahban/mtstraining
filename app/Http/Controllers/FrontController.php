@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\course;
+use App\Models\availability;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -22,8 +24,17 @@ class FrontController extends Controller
 
     }
 
-    public function course_search($course, $location)
+    public function course_search($course = null, $location = null)
     {
+        $query = availability::with('course')->when($course != null, function($c) use ($course){
+                        return $c->whereHas('course', function($query) use ($course){
+                            return $query->where('id', $course);
+                        });
+                    })->when($location != null , function ($query) use($location){
+                        return $query->where('location', 'LIKE', '%'.$location.'%');
+                    })
+                    ->where('starting' , '>=' , Carbon::now()->toDateTimeString())->get();
+        return $query;
         return view('search');
     }
 }
