@@ -97,8 +97,6 @@ class CourseController extends Controller
         $request->validate([
             'name'          =>  'required',
             'type'          =>  'required',
-            'short_desc'    =>  'required',
-            'assessment'    =>  'required',
         ]);
         $input  = $request->all();
         if($request->featured)
