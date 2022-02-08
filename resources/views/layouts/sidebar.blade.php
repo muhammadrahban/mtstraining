@@ -29,14 +29,14 @@
                         </li>
                         <li><a href="{{route('user.create')}}"><i class="icon icon-user-plus"></i>Add User</a>
                         </li>
-                        <li><a href="{{route('role.index')}}"><i class="icon icon-circle-o"></i>All Roles</a>
+                        {{-- <li><a href="{{route('role.index')}}"><i class="icon icon-circle-o"></i>All Roles</a>
                         </li>
                         <li><a href="{{route('role.create')}}"><i class="icon icon-add"></i>Add Role</a>
                         </li>
                         <li><a href="{{route('permission.index')}}"><i class="icon icon-eye3"></i>All Permissions</a>
                         </li>
                         <li><a href="{{route('permission.create')}}"><i class="icon icon-add"></i>Add Permission</a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
             @endrole

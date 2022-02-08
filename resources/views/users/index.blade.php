@@ -63,7 +63,14 @@
                                                         </div>
                                                     </td>
                                                     <td>+92 333 123 136</td>
-                                                    <td><span class="r-3 badge badge-success ">Administrator</span></td>
+
+                                                    @if (strpos($user->roles->pluck('name'), 'super-admin') !== false)
+                                                        <td><span class="r-3 badge badge-success ">super-admin</span></td>
+                                                    @elseif (strpos($user->roles->pluck('name'), 'branch-incharge') !== false)
+                                                        <td><span class="r-3 badge badge-success ">branch-incharge</span></td>
+                                                    @else
+                                                        <td><span class="r-3 badge badge-success ">user</span></td>
+                                                    @endif
                                                     <td>
                                                         <a href="{{route('user.edit', $user->id)}}"><i class="icon-pencil"></i></a>
                                                         <a href="{{route('user.destroy', $user->id)}}" onclick="event.preventDefault();

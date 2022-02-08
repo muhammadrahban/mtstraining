@@ -31,6 +31,5 @@ class DatabaseSeeder extends Seeder
         $permissions = Permission::pluck('id','id')->all();
         $role->syncPermissions($permissions);
         $user->assignRole($role->name);
-
     }
 }

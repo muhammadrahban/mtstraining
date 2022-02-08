@@ -21,12 +21,11 @@ class FrontController extends Controller
             // return $courses;
             return view('coursedetails', compact('courses'));
         }
-
     }
 
     public function course_search($course = null, $location = null)
     {
-        $query = availability::with('course')->when($course != null, function($c) use ($course){
+        $search = availability::with('course')->when($course != null, function($c) use ($course){
                         return $c->whereHas('course', function($query) use ($course){
                             return $query->where('id', $course);
                         });
@@ -34,7 +33,7 @@ class FrontController extends Controller
                         return $query->where('location', 'LIKE', '%'.$location.'%');
                     })
                     ->where('starting' , '>=' , Carbon::now()->toDateTimeString())->get();
-        return $query;
-        return view('search');
+        return $search;
+        return view('search', compact('search'));
     }
 }

@@ -28,8 +28,8 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('user', UserController::class);
-    Route::resource('role', RoleController::class);
-    Route::resource('permission', PermissionController::class);
+    // Route::resource('role', RoleController::class);
+    // Route::resource('permission', PermissionController::class);
     Route::resource('course', CourseController::class);
     Route::resource('location', LocationController::class);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
