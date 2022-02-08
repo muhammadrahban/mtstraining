@@ -59,12 +59,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @error('featured') 
+                                        @error('featured')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                        
+
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-row">
@@ -148,7 +148,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>    
+                                </div>
                             </div>
                             <hr>
                             <div class="card-body">
@@ -179,6 +179,8 @@
             readURL(this, 1);
         });
     });
+    CKEDITOR.replace( 'units' );
+    CKEDITOR.replace( 'desc' );
 </script>
 
 @endsection

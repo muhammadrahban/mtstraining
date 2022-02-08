@@ -17,16 +17,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        return view('home');
     }
 
-    public function course_detail($id)
-    {
-        return view('coursedetails');
-    }
-
-    public function course_search($course, $location)
-    {
-        return view('search');
-    }
 }

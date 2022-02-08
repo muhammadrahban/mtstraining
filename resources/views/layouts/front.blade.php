@@ -100,9 +100,9 @@
 							<li class="amit">
 								<a href="javascript:avoid(0);">Courses</a>
 								<ul>
-									<li class="amit"><a href="{{route('coursedetail', 1)}}">Course 1</a></li>
-									<li class="amit"><a href="#">Course 2</a></li>
-									<li class="amit"><a href="#">Course 3</a></li>
+                                    @foreach (getCourse() as $course)
+                                        <li class="amit"><a href="{{route('coursedetail', $course->id)}}">{{$course->name}}</a></li>
+                                    @endforeach
 								</ul>
 							</li>
 							<li class="amit"><a href="/blog">Blog</a> </li>

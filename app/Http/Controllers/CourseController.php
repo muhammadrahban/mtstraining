@@ -97,14 +97,10 @@ class CourseController extends Controller
         $request->validate([
             'name'          =>  'required',
             'type'          =>  'required',
-            'featured'      =>  'required',
             'short_desc'    =>  'required',
-            'desc'          =>  'required',
-            'units'         =>  'required',
             'assessment'    =>  'required',
         ]);
         $input  = $request->all();
-        // dd($request->featured);
         if($request->featured)
         {
             Storage::disk('uploads')->delete($request->featured);

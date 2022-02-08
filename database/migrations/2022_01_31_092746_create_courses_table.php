@@ -20,7 +20,7 @@ class CreateCoursesTable extends Migration
             $table->string("featured");
             $table->text("short_desc");
             $table->longText("desc");
-            $table->text("units");
+            $table->longText("units");
             $table->text("assessment");
             $table->timestamps();
         });
