@@ -16,7 +16,10 @@ class course extends Model
         'assessment',
         'short_desc',
         'units',
-        'desc',
+        'duration',
+        'earning',
+        'ageLimit',
+        'price',
     ];
 
     /**
@@ -27,5 +30,15 @@ class course extends Model
     public function availability()
     {
         return $this->hasMany(availability::class, 'course_id', 'id');
+    }
+
+    /**
+     * Get the desc associated with the course
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function desc()
+    {
+        return $this->hasOne(content::class, 'course_id', 'id');
     }
 }

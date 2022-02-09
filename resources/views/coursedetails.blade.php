@@ -19,7 +19,7 @@
                     <div class="col-md-8">
                         <div class="default_width">
                             <h5>
-                                <b>Short Description - </b>{{ $courses[0]->short_desc }}
+                                <b>{{ $courses[0]->short_desc }}</b>
                             </h5>
                             @if ($courses[0]->featured != null)
                                 <img src="{{asset('/uploads/'.$courses[0]->featured)}}" class="w-100 my-4">
@@ -32,7 +32,7 @@
                             </div>
 
                             <h6>Course Details</h6>
-                            <p><b>Long Description</b> {!! $courses[0]->desc !!} </p>
+                            <p><b> {!! $courses[0]->desc->desc !!} </b></p>
 
                             <h6>Course Dates</h6>
                             <h6>Course Locations</h6>
@@ -41,25 +41,24 @@
                     </div>
                     <div class="col-md-4">
                         <div class="card p-4">
-                            <b>COURSE NAME</b>
-                            <h6 class="text-primary font-weight-bold mb-3">{{$courses[0]->name}}</h6>
+                            <h6 class="text-primary font-weight-bold mb-3"><b>{{$courses[0]->name}}</b></h6>
                             <div class="d-flex justify-content-between mb-3">
                                 <div>
                                     <b>DURATION</b>
-                                    <h6>6 days</h6>
+                                    <h6>{{ $courses[0]->duration }}</h6>
                                 </div>
                                 <div class="mx-3">
                                     <b>FROM</b>
-                                    <h6>&pound; 199.99</h6>
+                                    <h6>&pound; {{ $courses[0]->price }}</h6>
                                 </div>
                                 <div>
                                     <b>EARNING POTENTIAL</b>
-                                    <h6>&pound; 10-14 per hour</h6>
+                                    <h6>&pound; {{ $courses[0]->earining }}</h6>
                                 </div>
                             </div>
 
                             <b>AGE REQUIREMENT</b>
-                            <h6 class="mb-3">18+ years</h6>
+                            <h6 class="mb-3">{{$courses[0]->ageLimit}}</h6>
 
                             <b>COURSE UNITS</b>
                             {!! $courses[0]->units !!}

@@ -96,7 +96,7 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group m-0">
                                                     <label for="assessment" class="col-form-label s-12">Assessment</label>
                                                     <input id="assessment" placeholder="Enter assessment" class="form-control r-0 light s-12 @error('assessment') is-invalid @enderror" name="assessment" type="text" @if ($idEdit) value="{{ $course[0]->assessment }}" @endif />
@@ -107,19 +107,65 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group m-0">
-                                                    <label for="short" class="col-form-label s-12">Short Description</label>
-                                                    <textarea id="short" placeholder="Enter Short Description" class="form-control r-0 light s-12 @error('short_desc') is-invalid @enderror" name="short_desc"> @if ($idEdit) {{ $course[0]->short_desc }} @endif </textarea>
-                                                    @error('short_desc')
+                                                    <label for="duration" class="col-form-label s-12">Duration</label>
+                                                    <input id="duration" placeholder="Enter Duration" class="form-control r-0 light s-12 @error('duration') is-invalid @enderror" name="duration" type="text" @if ($idEdit) value="{{ $course[0]->duration }}" @endif />
+                                                    @error('duration')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-4">
+                                                <div class="form-group m-0">
+                                                    <label for="earning" class="col-form-label s-12">Earning Potential</label>
+                                                    <input id="earning" placeholder="Enter Earning Potential" class="form-control r-0 light s-12 @error('earning') is-invalid @enderror" name="earning" type="text" @if ($idEdit) value="{{ $course[0]->earning }}" @endif />
+                                                    @error('earning')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group m-0">
+                                                    <label for="ageLimit" class="col-form-label s-12">Age Limit</label>
+                                                    <input id="ageLimit" placeholder="Enter Age Limit" class="form-control r-0 light s-12 @error('ageLimit') is-invalid @enderror" name="ageLimit" type="text" @if ($idEdit) value="{{ $course[0]->ageLimit }}" @endif />
+                                                    @error('ageLimit')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group m-0">
+                                                    <label for="price" class="col-form-label s-12">Price</label>
+                                                    <input id="price" placeholder="Enter Price" class="form-control r-0 light s-12 @error('price') is-invalid @enderror" name="price" type="text" @if ($idEdit) value="{{ $course[0]->price }}" @endif />
+                                                    @error('price')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="short" class="col-form-label s-12">Short Description</label>
+                                            <textarea id="short" placeholder="Enter Short Description" class="form-control r-0 light s-12 @error('short_desc') is-invalid @enderror" name="short_desc"> @if ($idEdit) {{ $course[0]->short_desc }} @endif </textarea>
+                                            @error('short_desc')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>

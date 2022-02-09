@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\availability;
+use App\Models\content;
 use App\Models\course;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
@@ -50,6 +51,10 @@ class CourseController extends Controller
             'desc'          =>  'required',
             'units'         =>  'required',
             'assessment'    =>  'required',
+            'duration'      =>  'required',
+            'earning'       =>  'required',
+            'ageLimit'      =>  'required',
+            'price'         =>  'required',
         ]);
         $input  = $request->all();
         // dd($request->featured);
@@ -58,6 +63,10 @@ class CourseController extends Controller
             $input['featured'] = Storage::disk('uploads')->putFile('', $request->featured);
         }
         $course = course::create($input);
+        content::create([
+            'course_id'     => $course->id,
+            'desc'          => $request->desc
+        ]);
         return redirect()->route('course.index');
     }
 
@@ -105,6 +114,9 @@ class CourseController extends Controller
             $input['featured'] = Storage::disk('uploads')->putFile('', $request->featured);
         }
         $course->update($input);
+        content::where('course_id', $course->id)->update([
+            'desc'          => $request->desc
+        ]);
         return redirect()->route('course.index');
     }
 
