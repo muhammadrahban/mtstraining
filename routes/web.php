@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -22,7 +23,8 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [FrontController::class, 'welcome']);
 Route::get('/coursedetail/{id?}', [FrontController::class, 'course_detail'])->name('coursedetail');
-Route::get('/search/{course?}/{location?}', [FrontController::class, 'course_search'])->name('search');
+Route::match(['get', 'post'], '/search', [FrontController::class, 'course_search'])->name('search');
+Route::post('/booking', [BookingController::class, 'booking'])->name('booking');
 
 Auth::routes();
 

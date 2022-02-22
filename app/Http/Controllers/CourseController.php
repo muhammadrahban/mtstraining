@@ -57,7 +57,6 @@ class CourseController extends Controller
             'price'         =>  'required',
         ]);
         $input  = $request->all();
-        // dd($request->featured);
         if($request->featured)
         {
             $input['featured'] = Storage::disk('uploads')->putFile('', $request->featured);

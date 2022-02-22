@@ -23,27 +23,23 @@ class FrontController extends Controller
         }
     }
 
-    public function course_search($course = null, $location = null)
+    public function course_search(Request $request)
     {
-        // $search = availability::with('course')->when(($course != null) && ($course != 0), function($c) use ($course){
-        //         return $c->whereHas('course', function($query) use ($course){
-        //             return $query->where('id', $course);
-        //         });
-        //     })->when($location != null , function ($query) use($location){
-        //         return $query->where('location', 'LIKE', '%'.$location.'%');
-        //     })
-        //     ->where('starting' , '>=' , Carbon::now()->toDateTimeString())->get();
-            $search = course::with('availability')->when(($course != null) && ($course != 0), function($c) use ($course){
-                    return $c->where('id', $course);
-                })->when($location != null , function ($query) use($location){
-                    return $query->whereHas('availability',function ($l) use($location){
-                        return $l->where('location', 'LIKE', '%'.$location.'%');
-                    });
-                })->whereHas('availability', function($query){
-                    $query->where('starting' , '>=' , Carbon::now()->toDateTimeString());
-                })->groupBy('id')->get();
-        $course = course::all();
+        $course     = $request->has('course') ? ($request->course != '0' ? $request->course : NULL) : NULL;
+        $location   = $request->has('location') ? $request->location : NULL;
+
+        $search = availability::with('course', 'user')
+            ->when($course != null, function($c) use ($course){
+                return $c->whereHas('course', function($query) use ($course){
+                    return $query->where('id', $course);
+                });
+            })->when($location != null, function ($query) use($location){
+                return $query->where('location', 'LIKE', '%'.$location.'%');
+            })
+            ->where('starting' , '>=' , Carbon::now()->toDateTimeString())->get()->groupBy(['location','course_id','user_id']);
+
         // return $search;
+        $course = course::all();
         return view('search', compact('search', 'course'));
     }
 }

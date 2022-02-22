@@ -28,4 +28,14 @@ class availability extends Model
     {
         return $this->belongsTo(course::class, 'course_id', 'id');
     }
+
+    /**
+     * Get the user associated with the availability
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

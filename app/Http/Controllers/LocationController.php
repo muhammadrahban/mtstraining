@@ -39,6 +39,7 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->id;
         $request->validate([
             'course_id'     =>  'required',
             'location'      =>  'required',
@@ -48,19 +49,19 @@ class LocationController extends Controller
             'ending'        =>  'required',
         ]);
         availability::where('user_id', Auth::user()->id)->where('course_id', $request->course_id)->delete();
-        // return $request->all();
         $count = 0;
         foreach($request->location as $location){
-            $data = [
-                'course_id'     =>  $request->course_id,
-                'user_id'       =>  Auth::user()->id,
-                'location'      =>  $request->location[$count],
-                'price'         =>  $request->price[$count],
-                'seats'         =>  $request->seats[$count],
-                'starting'      =>  $request->starting[$count],
-                'ending'        =>  $request->ending[$count],
-            ];
-            availability::create($data);
+            $availiblitiy = new availability();
+            $availiblitiy->id            =  ($request->id[$count]) ? (int)$request->id[$count] : NULL;
+            $availiblitiy->course_id     =  $request->course_id;
+            $availiblitiy->user_id       =  Auth::user()->id;
+            $availiblitiy->location      =  ucfirst($request->location[$count]);
+            $availiblitiy->price         =  $request->price[$count];
+            $availiblitiy->seats         =  $request->seats[$count];
+            $availiblitiy->starting      =  $request->starting[$count];
+            $availiblitiy->ending        =  $request->ending[$count];
+            $availiblitiy->timing        =  $request->timing[$count];
+            $availiblitiy->save();
             $count++;
         }
         return redirect(route('location.index'))->with('status', "Successfully Inserted");

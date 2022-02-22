@@ -52,6 +52,7 @@
                         </div>
                         <hr>
                         <div class="card-body after-add-more">
+                            <input type="hidden" name="id[]" id="avail_id">
                             <div class="form-row">
                                 <div class="col-md-5">
                                     <div class="form-group m-0">
@@ -91,7 +92,7 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group m-0">
                                         <label for="starting" class="col-form-label s-12">Starting Date</label>
                                         <input id="starting" name="starting[]" class="form-control r-0 light s-12 @error('starting') is-invalid @enderror" type="date" >
@@ -102,11 +103,22 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group m-0">
                                         <label for="ending" class="col-form-label s-12">Ending Date</label>
                                         <input id="ending" name="ending[]" class="form-control r-0 light s-12 @error('ending') is-invalid @enderror" type="date" >
                                         @error('ending')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group m-0">
+                                        <label for="timing" class="col-form-label s-12">Timing</label>
+                                        <input id="timing" name="timing[]" class="form-control r-0 light s-12 @error('timing') is-invalid @enderror" type="text" >
+                                        @error('timing')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -129,6 +141,7 @@
 
 <div class="copy d-none">
     <div class="card-body new_one">
+        <input type="hidden" name="id[]" id="avail_id">
         <div class="form-row">
             <div class="col-md-5">
                 <div class="form-group m-0">
@@ -168,7 +181,7 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-group m-0">
                     <label for="starting" class="col-form-label s-12">Starting Date</label>
                     <input id="starting" name="starting[]" class="form-control r-0 light s-12 @error('starting') is-invalid @enderror" type="date" >
@@ -179,11 +192,22 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-group m-0">
                     <label for="ending" class="col-form-label s-12">Ending Date</label>
                     <input id="ending" name="ending[]" class="form-control r-0 light s-12 @error('ending') is-invalid @enderror" type="date" >
                     @error('ending')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-0">
+                    <label for="timing" class="col-form-label s-12">Timing</label>
+                    <input id="timing" name="timing[]" class="form-control r-0 light s-12 @error('timing') is-invalid @enderror" type="text" >
+                    @error('timing')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -213,22 +237,27 @@
                     method:"GET",
                     success:function(res)
                     {
+                        $("#avail_id").val('');
                         $("#Location").val('');
                         $("#price").val('');
                         $("#seat").val('');
                         $("#starting").val('');
                         $("#ending").val('');
+                        $("#timing").val('');
                         $(".card").find(".new_one").remove();
                         for (let i = 0; i < res['data'].length; ++i) {
                             if (i == 0) {
+                                $("#avail_id").val(res['data'][i]['id']);
                                 $("#Location").val(res['data'][i]['location']);
                                 $("#price").val(res['data'][i]['price']);
                                 $("#seat").val(res['data'][i]['seats']);
                                 $("#starting").val(res['data'][i]['starting']);
                                 $("#ending").val(res['data'][i]['ending']);
+                                $("#timing").val(res['data'][i]['timing']);
                             }else{
                                 $(".after-add-more").after(
                                     '<div class="card-body new_one">'+
+                                        '<input type="hidden" name="id[]" id="avail_id" value="'+res['data'][i]['id']+'">'+
                                         '<div class="form-row">'+
                                             '<div class="col-md-5">'+
                                                 '<div class="form-group m-0">'+
@@ -253,16 +282,22 @@
                                             '</div>'+
                                         '</div>'+
                                         '<div class="form-row">'+
-                                            '<div class="col-md-5">'+
+                                            '<div class="col-md-4">'+
                                                 '<div class="form-group m-0">'+
                                                     '<label for="startings" class="col-form-label s-12">Starting Date</label>'+
                                                     '<input id="startings" name="starting[]" class="form-control r-0 light s-12" type="date" value="'+res['data'][i]['starting']+'">'+
                                                 '</div>'+
                                             '</div>'+
-                                            '<div class="col-md-5">'+
+                                            '<div class="col-md-4">'+
                                                 '<div class="form-group m-0">'+
                                                     '<label for="endings" class="col-form-label s-12">Ending Date</label>'+
                                                     '<input id="endings" name="ending[]" class="form-control r-0 light s-12" type="date" value="'+res['data'][i]['ending']+'">'+
+                                                '</div>'+
+                                            '</div>'+
+                                            '<div class="col-md-4">'+
+                                                '<div class="form-group m-0">'+
+                                                    '<label for="timing" class="col-form-label s-12">Timing</label>'+
+                                                    '<input id="timing" name="timing[]" class="form-control r-0 light s-12" type="text" value="'+res['data'][i]['timing']+'" >'+
                                                 '</div>'+
                                             '</div>'+
                                         '</div>'+
