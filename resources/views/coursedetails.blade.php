@@ -28,7 +28,7 @@
                             @endif
                             <div class="mb-4">
                                 <a href="{{route('search')}}" class="btn btn-lg btn-primary">Check Availabilities</a>
-                                <a href="#" class="btn btn-lg btn-secondary">Book Now</a>
+                                <a href="" class="btn btn-lg btn-secondary">Book Now</a>
                             </div>
 
                             <h6>Course Details</h6>

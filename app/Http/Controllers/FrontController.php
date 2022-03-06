@@ -36,7 +36,8 @@ class FrontController extends Controller
             })->when($location != null, function ($query) use($location){
                 return $query->where('location', 'LIKE', '%'.$location.'%');
             })
-            ->where('starting' , '>=' , Carbon::now()->toDateTimeString())->get()->groupBy(['location','course_id','user_id']);
+            // ->where('starting' , '>=' , Carbon::now()->toDateTimeString())
+            ->get()->groupBy(['location','course_id','user_id']);
 
         // return $search;
         $course = course::all();

@@ -40,9 +40,10 @@
                     @foreach ($loc as $cos)
                         @foreach ($cos as $items)
                             <!--Single Item Start-->
-                            <form action="{{route('booking')}}" method="post">
+                            {{-- <form action="{{route('booking')}}" method="post"> --}}
+                            <div>
                                 @csrf
-                                <div class="card mb-4">
+                                <div class="card mb-4 single">
                                     <div class="row mx-0">
                                         <div class="col-md-8 p-4">
                                             <span class="badge alert-warning px-4 py-3 mb-3">Best selling SIA course</span>
@@ -104,7 +105,7 @@
                                             <h6>Price from</h6>
                                             <h5 class="text-primary font-weight-bold">&pound;<span  id="loc_avail_{{$sea->course_i}}_price">{{$items[0]->price}}</span></h5>
                                             <h6 class="text-danger font-weight-bold mb-3">Hurry! - Only {{$items[0]->seats}} seats left</h6>
-                                            <button type="submit" class="btn btn-primary btn-lg btn-block mb-4">Book Now</button>
+                                            <button type="button" onclick="addtocart(this)" class="btn btn-primary btn-lg btn-block mb-4">Book Now</button>
                                             <small class="mt-4">
                                                 Course provided by
                                                 <br>
@@ -113,7 +114,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                            {{-- </form> --}}
                         @endforeach
                     @endforeach
                 @endforeach
@@ -125,7 +127,6 @@
     <!--Main Content Wrap End-->
     <script>
         function evalDate(obj){
-
             var theID=$(obj).find('option[value="'+$(obj).val()+'"]').last().attr('data-id');
             var price=$(obj).find('option[value="'+$(obj).val()+'"]').last().attr('data-price');
             var time=$(obj).find('option[value="'+$(obj).val()+'"]').last().attr('data-timing');
@@ -133,6 +134,35 @@
             $('#'+theID+'_price').text(price);
             $('#'+theID+'_days').text(days);
             $('#'+theID+'_time').text(time);
+        }
+
+        function addtocart(obj){
+            // alert('fdasklh');
+            var pickupdate  = $(obj).closest('.single').find('select[name="avalibilty"]').val();
+            var course      = $(obj).closest('.single').find('input[name="course_id"]').val();
+            var user_id     = $(obj).closest('.single').find('input[name="user_id"]').val();
+            $.ajax({
+                url:'{{route('booking')}}',
+                type:'post',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                data:{
+                    // 'csrf-token':'{{ csrf_token() }}',
+                    'avalibilty':pickupdate,
+                    'course':course,
+                    'user':user_id,
+                },
+                success : function(response){
+                    console.log(response);
+                    if(response.success){
+                        $(obj).replaceWith('<p>Booked</p><a href="#">Checkout</a>');
+                    }
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            })
         }
     </script>
 @endsection
