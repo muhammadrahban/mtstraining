@@ -40,7 +40,10 @@ class FrontController extends Controller
             ->get()->groupBy(['location','course_id','user_id']);
 
         // return $search;
-        $course = course::all();
-        return view('search', compact('search', 'course'));
+        $course     = course::all();
+        $cart       = $request->session()->get('cart');
+        // $cart       = $request->session()->forget('cart');
+        // return $cart;
+        return view('search', compact('search', 'course', 'cart'));
     }
 }

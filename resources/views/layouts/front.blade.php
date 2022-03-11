@@ -82,7 +82,7 @@
 				<div class="container">
 					<!--Logo Wrap Start-->
 					<div class="gt_logo gt_logo_padding new-logo">
-						<a href="/">
+						<a href="{{  url('') }}">
 							<strong style="font-weight:bolder; color:inherit;">MTS</strong> Training
 						</a>
 						<button class="gt_mobile_menu main-menu-bg4">

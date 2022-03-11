@@ -134,6 +134,35 @@
                                                     {{$items[0]->user->name}}
                                                 </small>
                                             @endif
+@if(isset($cart))
+                                                @foreach ($items as $check_sea)
+                                                    @foreach($cart[0] as $key => $value)
+                                                        @if ($value['course'] == $check_sea->course_id || $value['user'] == $check_sea->user_id)
+                                                            @php
+                                                                $data = $check_sea->id.'_'. $check_sea->course_id.'_'. $check_sea->user_id;
+                                                            @endphp
+                                                            @if ($key === $data)
+                                                                <p>Booked</p>
+                                                                <button type="button" class="btn btn-primary btn-lg btn-block mb-4">Checkout</button>
+                                                            @endif
+                                                        @else
+                                                            <button type="button" onclick="addtocart(this)" class="btn btn-primary btn-lg btn-block mb-4">Book Now</but>
+                                                            <small class="mt-4">
+                                                                Course provided by
+                                                                <br>
+                                                                {{$items[0]->user->name}}
+                                                            </small>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            @else
+                                                <button type="button" onclick="addtocart(this)" class="btn btn-primary btn-lg btn-block mb-4">Book Now</button>
+                                                <small class="mt-4">
+                                                    Course provided by
+                                                    <br>
+                                                    {{$items[0]->user->name}}
+                                                </small>
+                                            @endif
                                             
                                         </div>
                                     </div>
